@@ -8,35 +8,47 @@ if (isset($_REQUEST["page"])) {
 
     switch ($page) {
         case "listeApprenants":
+            // Récupération des filtres
             $filters = [
                 'matricule' => $_GET['matricule'] ?? '',
                 'classe' => $_GET['classe'] ?? '',
                 'statut' => $_GET['statut'] ?? ''
             ];
-            $currentPage = $_GET['p'] ?? 1;
+            
+            // Pagination
+            $currentPage = (int)($_GET['p'] ?? 1);
             $perPage = 10;
 
+            // Récupération des données
             $apprenants = findAllApprenants($filters, $currentPage, $perPage);
             $total = countApprenants($filters);
 
+            // Export si demandé
             if (isset($_GET['export'])) {
                 if ($_GET['export'] == 'pdf') {
                     exportApprenantsPDF($apprenants);
+                    exit;
                 } elseif ($_GET['export'] == 'excel') {
                     exportApprenantsExcel($apprenants);
+                    exit;
                 }
             }
+            
 
+            // Affichage de la vue
             RenderView("apprenants/listeApprenants", [
                 'apprenants' => $apprenants,
                 'total' => $total,
                 'currentPage' => $currentPage,
                 'perPage' => $perPage,
-                'filters' => $filters
+                'filters' => $filters,
+                'classes' => getClasses(), // Ajout des classes pour les filtres
+                'statuts' => getStatuts() // Ajout des statuts pour les filtres
             ], "base.layout");
+            
             break;
 
-        case "ajouter":
+         case "ajouter":
             if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $matricule = trim($_POST["matricule"] ?? '');
                 $nom = trim($_POST["nom"] ?? '');

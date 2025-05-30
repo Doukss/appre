@@ -51,7 +51,7 @@ $referentiels_page = array_slice($referentiels, $offset, $items_per_page);
             
             <input type="text" name="search" placeholder="Rechercher un référentiel..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>" class="border px-2 py-1 rounded">
             
-            <button type="submit" class="border border-gray-300 text-gray-400 px-4 py-1 rounded">Rechercher</button>
+            <button type="submit" class="border border-gray-300 text-gray-400 px-4 py-1 rounded"><i class="ri-filter-3-line"></i></button>
 
           </form>        
         </div>

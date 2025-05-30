@@ -70,17 +70,51 @@ if ($action === 'add') {
 
 switch ($page) {
     case "ajoutPromotion":
-        
+        $referentiels = getAllReferentiels();
+        require_once "../app/views/promotion/ajoutPromotion.html.php";
         break;
 
     case "modifierPromotion":
-       
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $promotion = getPromotionById($id);
+            $referentiels = getAllReferentiels();
+            if ($promotion) {
+                require_once "../app/views/promotion/modifierPromotion.html.php";
+            } else {
+                $_SESSION['error'] = "Promotion non trouvée";
+                header("Location: " . WEBROOB . "?controllers=promotion&page=listePromotion");
+                exit;
+            }
+        }
         break;
     
     case "listePromotion":
         $search = $_GET['search'] ?? '';
         $page = max(1, isset($_GET['page']) ? (int)$_GET['page'] : 1);
+        $view = $_GET['view'] ?? 'grille';
         
+        $result = findAllPromotion($search, $page);
+        
+        if ($result === null) {
+            $_SESSION['error'] = "Une erreur est survenue lors de la récupération des promotions";
+            $result = [
+                'data' => [],
+                'total' => 0,
+                'current_page' => 1,
+                'items_per_page' => 6,
+                'total_pages' => 1
+            ];
+        }
+        
+        $promotions = $result['data'];
+        $pagination = [
+            'current_page' => $result['current_page'],
+            'total_pages' => $result['total_pages'],
+            'total_items' => $result['total']
+        ];
+        $stats = getDashboardStat();
+        showPromotionList($promotions, $stats, $pagination, $view);
         break;
 
     case "detailPromotion":

@@ -19,29 +19,34 @@ $totalPages = $pagination['total_pages'];
 
         <!-- Statistique-->
         <div id="cardContainer" class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-4 gap-6">
-          <div class="bg-red-700 text-[#F9CF98] p-4 rounded-lg text-center shadow">
+          <div class="bg-red-700 text-[#F9CF98] p-4 flex justify-between rounded-lg text-center shadow">
             <p class="text-2xl font-bold">
               <?= isset($stats["total_apprenant"]) ? htmlspecialchars($stats["total_apprenant"]) : 0 ?>
             </p>
             <p>Apprenant</p>
+              <div class="bg-white w-14 h-14 rounded-full p-2"><i class="ri-group-line text-2xl"></i></div>
           </div>
-          <div class="bg-red-700 text-[#F9CF98] p-4 rounded-lg text-center shadow">
+          <div class="bg-red-700 text-[#F9CF98] p-4 flex justify-between rounded-lg text-center shadow">
             <p class="text-2xl font-bold">
               <?= isset($stats["total_referentiel"]) ? htmlspecialchars($stats["total_referentiel"]) : 0 ?>
             </p>
             <p>Référentiel</p>
+              <div class="bg-white w-14 h-14 rounded-full p-2"><i class="ri-book-line text-2xl"></i></div>
           </div>
-          <div class="bg-red-700 text-[#F9CF98] p-4 rounded-lg text-center shadow">
+          <div class="bg-red-700 text-[#F9CF98] p-4 flex rounded-lg text-center shadow">
             <p class="text-2xl font-bold">
               <?= isset($stats["total_promotionActive"]) ? htmlspecialchars($stats["total_promotionActive"]) : 0 ?>
             </p>
             <p>Promotion active</p>
+            <div class="bg-white w-14 h-14 rounded-full p-2"><i class="ri-check-fill text-4xl"></i></div>
           </div>
-          <div class="bg-red-700 text-[#F9CF98] p-4 rounded-lg text-center shadow">
+          <div class="bg-red-700 text-[#F9CF98] p-4 flex rounded-lg text-center shadow">
             <p class="text-2xl font-bold">
               <?= isset($stats["total_promotion"]) ? htmlspecialchars($stats["total_promotion"]) : 0 ?>
             </p>
             <p>Total promotion</p>
+              <div class="bg-white w-14 h-14 rounded-full p-2"><i class="ri-folder-line text-2xl"></i></div>
+
           </div>
         </div>
 
@@ -159,13 +164,8 @@ $totalPages = $pagination['total_pages'];
                 <?php foreach ($promotions as $promotion): ?>
                   <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
-                        <?php if (!empty($promotion['photo'])): ?>
-                          <img src="data:image/jpeg;base64,<?= base64_encode($promotion['photo']) ?>" 
-                               alt="Photo de la promotion" 
-                               class="w-full h-full object-cover">
-                        <?php endif; ?>
-                      </div>
+                      <img src="data:image/jpeg;base64,<?= base64_encode($promotion['photo']) ?>" 
+                       class="promotion-photo" alt="Photo promotion">
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <?= htmlspecialchars($promotion["promotion"] ?? 'Non défini') ?>

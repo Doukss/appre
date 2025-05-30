@@ -15,7 +15,7 @@
     <ul class="space-y-2">
       <li>
         <a href="<?= WEBROOB ?>?controllers=referentiel&page=listeReferentiel" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-200">
-          <i class="ri-book-2-line"></i>
+          <i class="ri-dashboard-line"></i>
           <span>Dashboard</span>
         </a>
       </li>
